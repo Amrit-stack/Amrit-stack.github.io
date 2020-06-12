@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List of repositories</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<style>
+body
+	{
+		text-align:center;
+	}
+	
+</style>
+
+
+<body>
+	<img
+     height="100";
+     width="100";
+     id="profile"
+	>
+	<h3 id="fullname"></h3>
+	<p>Check me on <a href="https://github.com/Amrit-stack">Github</a></p>
+	<b><u>My project</u></b>
+	<table align="center" border="2px">
+  <thead>
+    <tr>
+      <th>Repositories name</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+fetch('https://api.github.com/users/Amrit-stack').then(response=>response.json())
+.then(function(data1)
+{
+	console.log(data1)
+	document.getElementById('profile').src=data1['avatar_url']
+	document.getElementById('fullname').textContent=data1['name']
+	
+	var request=new XMLHttpRequest()
+
+request.open('GET','https://api.github.com/users/Amrit-stack/repos',true)
+
+request.onload=function(){
+
+var data=JSON.parse(this.response);
+
+var statusHTML='';
+
+$.each(data,function(i,status){
+
+statusHTML+='<tr>';
+
+statusHTML+='<td>'+status.name+'</td>';
+
+statusHTML+='</tr>';
+});
+
+$('tbody').html(statusHTML);
+
+}
+request.send();
+
+})
+</script>
+</body>
+</html>
